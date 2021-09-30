@@ -18,7 +18,7 @@
   <div class="breadcrumb-header justify-content-between">
     <div class="my-auto">
       <div class="d-flex">
-        <h4 class="content-title mb-0 my-auto">Departments</h4><span class="text-muted mt-1 tx-13 ml-2 mb-0">/ Create</span>
+        <h4 class="content-title mb-0 my-auto">Employees</h4><span class="text-muted mt-1 tx-13 ml-2 mb-0">/ Create</span>
       </div>
     </div>
   </div>
@@ -31,13 +31,13 @@
       <div class="card">
         <div class="card-body">
           @include('partials._session')
-          <form action="{{ route('departments.store') }}" method="post" data-parsley-validate="">
+          <form action="{{ route('employees.store') }}" method="post" data-parsley-validate="">
             @csrf
             <div class="row row-xs formgroup-wrapper">
               <div class="col-md-12 mg-t-10">
                 <div class="form-group">
-                  <label class="form-label">Department Name: <span class="tx-danger">*</span></label>
-                  <input class="form-control @error('name') is-invalid fparsley-error parsley-error @enderror" name="name" placeholder="Enter department name" required type="text" value="{{ old('name') }}">
+                  <label class="form-label">Name: <span class="tx-danger">*</span></label>
+                  <input class="form-control @error('name') is-invalid fparsley-error parsley-error @enderror" name="name" placeholder="Enter employee name" required type="text" value="{{ old('name') }}">
                   @error('name')
                     <span class="invalid-feedback text-danger" role="alert">
                       <p>{{ $message }}</p>
@@ -45,8 +45,38 @@
                   @enderror
                 </div><!-- main-form-group -->
               </div>
+              <div class="col-md-12 mg-t-10">
+                <div class="form-group">
+                  <label class="form-label">Email: <span class="tx-danger">*</span></label>
+                  <input class="form-control @error('email') is-invalid fparsley-error parsley-error @enderror" name="email" placeholder="Enter employee email" required type="text" value="{{ old('email') }}">
+                  @error('email')
+                    <span class="invalid-feedback text-danger" role="alert">
+                      <p>{{ $message }}</p>
+                    </span>
+                  @enderror
+                </div>
+              </div>
+              <div class="col-md-12 mg-t-20">
+                <div class="parsley-select" id="slWrapper">
+                  <label class="form-label">Department: <span class="tx-danger">*</span></label>
+                  <select class="form-control select2" name="department_id" data-parsley-class-handler="#slWrapper" data-parsley-errors-container="#slErrorContainer" required="">
+                    <option value=""></option>
+                    @foreach($departments as $department)
+                      <option value="{{ $department->id }}">
+                        {{ $department->name }}
+                      </option>
+                    @endforeach
+                  </select>
+                  <div id="slErrorContainer"></div>
+                  @error('department')
+                    <span class="invalid-feedback text-danger" role="alert">
+                      <p>{{ $message }}</p>
+                    </span>
+                  @enderror
+                </div>
+              </div>
               <div class="col-12">
-                  <button class="btn btn-main-primary pd-x-20 mg-t-20" type="submit">Add </button>
+                <button class="btn btn-main-primary pd-x-20 mg-t-20" type="submit">Add </button>
               </div>
             </div>
           </form>

@@ -117,11 +117,11 @@ $(function() {
 	];
 	var plot = $.plot($('#flotLine1'), [{
 		data: newCust,
-		label: 'New Customer',
+		label: 'New Employee',
 		color: '#007bff'
 	}, {
 		data: retCust,
-		label: 'Returning Customer',
+		label: 'Returning Employee',
 		color: '#f7557a'
 	}], {
 		series: {
@@ -164,11 +164,11 @@ $(function() {
 	});
 	var plot = $.plot($('#flotLine2'), [{
 		data: newCust,
-		label: 'New Customer',
+		label: 'New Employee',
 		color: '#560bd0'
 	}, {
 		data: retCust,
-		label: 'Returning Customer',
+		label: 'Returning Employee',
 		color: '#f7557a'
 	}], {
 		series: {
@@ -211,11 +211,11 @@ $(function() {
 	});
 	var plot = $.plot($('#flotArea1'), [{
 		data: newCust,
-		label: 'New Customer',
+		label: 'New Employee',
 		color: '#f7557a '
 	}, {
 		data: retCust,
-		label: 'Returning Customer',
+		label: 'Returning Employee',
 		color: '#007bff'
 	}], {
 		series: {
@@ -266,11 +266,11 @@ $(function() {
 	});
 	var plot = $.plot($('#flotArea2'), [{
 		data: newCust,
-		label: 'New Customer',
+		label: 'New Employee',
 		color: '#f7557a'
 	}, {
 		data: retCust,
-		label: 'Returning Customer',
+		label: 'Returning Employee',
 		color: '#560bd0'
 	}], {
 		series: {

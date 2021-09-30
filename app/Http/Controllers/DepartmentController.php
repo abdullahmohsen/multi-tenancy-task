@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\DepartmentRequest;
 use App\Models\Department;
-use Illuminate\Http\Request;
 
 class DepartmentController extends Controller
 {
@@ -25,7 +25,7 @@ class DepartmentController extends Controller
     return view('dashboard.departments.create');
   }
 
-  public function store(Request $request)
+  public function store(DepartmentRequest $request)
   {
     try {
       $this->departmentModel::create([
@@ -44,7 +44,7 @@ class DepartmentController extends Controller
     return view('dashboard.departments.edit', compact('department'));
   }
 
-  public function update(Request $request, $id)
+  public function update(DepartmentRequest $request, $id)
   {
     $department = $this->departmentModel->findOrFail($id);
     try {

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\TenancyController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +14,19 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+//Route::domain('{tenant}.localhost')->middleware('tenant')->group(function () {
+//  Route::get('/', function ($tenant) {
+//    return $tenant;
+//  });
+//});
+
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
+    return view('dashboard');
+})->name('dashboard');
+
+Route::get('tenancies/create', [TenancyController::class, 'create'])->name('tenancy.create');
+Route::post('tenancies/create', [TenancyController::class, 'store'])->name('tenancy.store');

@@ -2,8 +2,8 @@
 
 namespace App\Rules;
 
+use App\Models\Tenant;
 use Illuminate\Contracts\Validation\Rule;
-use Spatie\Multitenancy\Models\Tenant;
 
 class IsDomainExist implements Rule
 {
@@ -26,8 +26,7 @@ class IsDomainExist implements Rule
      */
     public function passes($attribute, $value)
     {
-      $subDomain = explode(':', $_SERVER['HTTP_HOST'], 2);
-      $domain = $value.'.'.$subDomain[0];
+      $domain = $value . '.' . request()->getHost();
       $isDomainExist = Tenant::where('domain', $domain)->first();
       if ($isDomainExist) {
         return false;

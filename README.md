@@ -1,5 +1,6 @@
-## To Run a Project
+# Employees Task Manager
 
+## Getting started:
 1. Install Composer Dependencies
 ```run composer install```
 1. Create a copy of your .env file

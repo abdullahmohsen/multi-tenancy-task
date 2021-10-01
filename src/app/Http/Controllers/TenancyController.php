@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\TenantRequest;
+use function Couchbase\defaultDecoder;
 
 class TenancyController extends Controller
 {
@@ -22,8 +23,7 @@ class TenancyController extends Controller
   {
     try {
       DB::beginTransaction();
-      $subDomain = explode(':', $_SERVER['HTTP_HOST'], 2);
-      $domain = $request->domain.'.'.$subDomain[0];
+      $domain = $request->domain . '.' . $request->getHost();
       Tenant::create([
         'name'    => $request->name,
         'domain'  => $domain,
@@ -38,8 +38,7 @@ class TenancyController extends Controller
         'password'  => Hash::make($request->password)
       ]);
       DB::commit();
-      session()->flash('success', 'Created Successfully, You Can Login now with ' . $domain);
-      return redirect()->back();
+      return redirect()->back()->with('success', $domain);
     } catch (\Exception $ex) {
       DB::rollBack();
       return back()->with('error', 'Try Again');
@@ -48,24 +47,6 @@ class TenancyController extends Controller
 
   private function createDB($dbname)
   {
-    $servername = env('DB_HOST', '127.0.0.1');
-    $username = env('DB_USERNAME', 'root');
-    $password = env('DB_PASSWORD', '');
-
-    // Create connection
-    $conn = mysqli_connect($servername, $username, $password);
-    // Check connection
-    if (!$conn) {
-      die("Connection failed: " . mysqli_connect_error());
-    }
-
-    // Create database
-    $sql = "CREATE DATABASE IF NOT EXISTS " . $dbname;
-    if (mysqli_query($conn, $sql)) {
-      echo "Database created successfully";
-    } else {
-      echo "Error creating database: " . mysqli_error($conn);
-    }
-    mysqli_close($conn);
+    DB::connection(env('DB_CONNECTION', ''))->statement("CREATE DATABASE ".$dbname);
   }
 }

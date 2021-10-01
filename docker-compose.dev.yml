@@ -31,7 +31,7 @@ services:
     environment:
       MYSQL_DATABASE: tenancy
       MYSQL_USER: root
-      MYSQL_PASSWORD: Boody@@2579
+      MYSQL_PASSWORD: Boody@@25
       MYSQL_ROOT_PASSWORD: Boody@@2579
       SERVICE_TAGS: dev
       SERVICE_NAME: mysql
@@ -65,7 +65,7 @@ services:
   redis_service:
     image: redis:alpine
     container_name: redis_service
-    command: redis-server --appendonly yes 
+    command: redis-server --appendonly yes
     ports:
       - "6379:6379"
     depends_on:

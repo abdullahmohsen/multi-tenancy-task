@@ -6,9 +6,9 @@
 
         <x-jet-validation-errors class="mb-4" />
 
-        @if (session('success'))
+        @if (session()->has('success'))
           <div class="alert alert-success alert-dismissible fade show" role="alert">
-            <span class="alert-inner--text"><strong>Success!</strong> {{ session('success') }}</span>
+            <span class="alert-inner--text"><strong>Success!</strong> Created Successfully, You dashboard is now ready <a href="http://{{ session()->get('success') }}">{{ session()->get('success') }}</a></span>
           </div>
         @endif
 

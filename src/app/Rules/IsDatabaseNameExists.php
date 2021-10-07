@@ -5,7 +5,7 @@ namespace App\Rules;
 use App\Models\Tenant;
 use Illuminate\Contracts\Validation\Rule;
 
-class IsDomainExist implements Rule
+class IsDatabaseNameExists implements Rule
 {
     /**
      * Create a new rule instance.
@@ -26,9 +26,9 @@ class IsDomainExist implements Rule
      */
     public function passes($attribute, $value)
     {
-      $domain = $value . '.' . request()->getHost();
-      $isDomainExist = Tenant::where('domain', $domain)->first();
-      if ($isDomainExist) {
+      $databaseName = str_replace(' ', '-', $value);
+      $isDatabaseExist = Tenant::where('database', $databaseName)->first();
+      if ($isDatabaseExist) {
         return false;
       }
       return true;
@@ -41,6 +41,6 @@ class IsDomainExist implements Rule
      */
     public function message()
     {
-        return 'The domain has already been taken.';
+      return 'The database has already been taken.';
     }
 }

@@ -21,17 +21,20 @@ class TenancyController extends Controller
 
   public function store(TenantRequest $request)
   {
+    $databaseName = str_replace(' ', '-', $request->database);
+    $domainName = str_replace(' ', '-', $request->domain);
+    $domain = $domainName . '.' . $request->getHost();
+
     try {
       DB::beginTransaction();
-      $domain = $request->domain . '.' . $request->getHost();
       Tenant::create([
         'name'    => $request->name,
         'domain'  => $domain,
-        'database'=> $request->database
+        'database'=> $databaseName
       ]);
-      $this->createDB($request->database);
+      $this->createDB($databaseName);
       Artisan::call('tenants:artisan "migrate --database=tenant"');
-      Config::set('database.connections.tenant.database', $request->database);
+      Config::set('database.connections.tenant.database', $databaseName);
       DB::table('users')->insert([
         'name'      => $request->name,
         'email'     => $request->email,
